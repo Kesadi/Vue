@@ -39,7 +39,7 @@ export default {
       // paymentsList: [], //берем данные не отсюда, а из хранилища. И пополняем тоже хранилище
       buttonClick: true,
       size: 3,
-      pageNumber: null,
+      pageNumber: 1,
     }
   },
 
@@ -57,14 +57,10 @@ export default {
 
   getPage() {
       
-if (this.$store.getters.getObjectFromState["page"+this.pageNumber]==null) {
-  
-  this.$store.dispatch('fetchProducts', this.pageNumber)
-   return  this.$store.getters.getObjectFromState["page"+this.pageNumber]
-} else {
+
       
       return this.$store.getters.getObjectFromState["page"+this.pageNumber]
-}
+
     }
   },
 
@@ -145,6 +141,10 @@ if (this.$store.getters.getObjectFromState["page"+this.pageNumber]==null) {
    currentPage(page) {
      
       this.pageNumber=page
+      if (this.$store.getters.getObjectFromState["page"+this.pageNumber]==null) {
+  
+        this.$store.dispatch('fetchProducts', page)
+      }
     //   if (Object.keys(this.$store.getters.getObjectFromState).length==0) {
     //    return (this.$store.dispatch('fetchProducts', page))
     //  }
@@ -154,6 +154,7 @@ if (this.$store.getters.getObjectFromState["page"+this.pageNumber]==null) {
   },
 
  created () {
+   this.$store.dispatch('fetchProducts', this.pageNumber)
   //this.$store.dispatch('fetchData') // вызываем экшн с именем fetchData
   // this.paymentsList = this.fetchData()  
   //this.$store.commit('setPaymentsListData', this.fetchData()) //вызываем мутацию с именем setPaymentsListData методом commit. И хотим передать в хранилицще результат метода fetchData(), т.е. массив

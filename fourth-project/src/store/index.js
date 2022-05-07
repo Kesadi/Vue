@@ -45,8 +45,8 @@ const mutations = { // ПОМЕСТИТЬ ДАННЫЕ В ХРАНИЛИЩЕ
   // },
 
   addDataToPaymentList(state, {res, pNumber}) { //напишем мутацию, которая дополнит хранилище paymentList одним и более элементом
-   state.paymentList[0]["page"+pNumber] = res   //payload - это тот самый элемент, который добавляется. Далее мутацию нужно вызвать в компоненте AddPaymentForm
-  
+      //payload - это тот самый элемент, который добавляется. Далее мутацию нужно вызвать в компоненте AddPaymentForm
+   Vue.set( state.paymentList[0], "page"+pNumber, res)
   },
 
 
@@ -109,12 +109,12 @@ export default new Vuex.Store({ //здесь перечисляем что у н
       return new Promise((resolve)=> {
         setTimeout(()=> {
          const myProd = pages["page"+pNumber]
-          // console.log(myProd)
+          console.log(myProd)
           
           resolve(myProd)
         }, 500)
       }).then(res => {
-        context.commit('addDataToPaymentList', {res, pNumber})          ////////////// НОГАЙНА, добей!!!
+        context.commit('addDataToPaymentList', {res, pNumber})        
       })
     }
 

@@ -30,6 +30,7 @@ export default {
     methods: {
        
         onClickPage(page) {
+            
             this.$emit('currentPage', page)
         },
     }
